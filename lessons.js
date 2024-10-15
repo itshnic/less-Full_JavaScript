@@ -72,3 +72,5 @@ let result = function (a, b, action) {
 	}
 };
 console.log(result(1, 0, "/"));
+
+console.log("Less - 8");
