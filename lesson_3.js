@@ -22,3 +22,9 @@ divEl.insertAdjacentHTML("afterEnd", '<a href="#">link</a>');
 const idEl = document.querySelector("#dropdownMenuButton");
 idEl.setAttribute("id", "superDropdown");
 /* 6 */
+const ariaEl = document.querySelector('[aria-labelledby="dropdownMenuButton"]');
+/* ariaEl.setAttribute("data-dd", 3); */
+ariaEl.dataset.dd = 3;
+/* 7 */
+const toggleEl = document.querySelector(".dropdown-toggle");
+toggleEl.removeAttribute("type");
