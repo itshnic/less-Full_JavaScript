@@ -3,11 +3,40 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>LessonsJS_2024</title></head
-	>img
+		<title>LessonsJS_2024</title>
+	</head>
 	<body>
+		<div>
+			<audio src="file.mp3" controls></audio>
+		</div>
+		<div>
+			<canvas width="300" height="20"></canvas>
+		</div>
+		<script>
+			const audio = document.querySelector("audio");
+			const { buffered, duration } = audio;
+			const canvas = document.querySelector("canvas");
+			const context = canvas.getContext("2d");
+			context.fillStyle = "lightgray";
+			context.fillRect(0, 0, canvas.width, canvas.height);
+			context.fillStyle = "red";
+			context.strokeStyle = "white";
+			const coef = canvas.width / duration; // Длина одной секунды в пикселях
+			// отображение TimeRanges
+			audio.addEventListener("seeked", () => {
+				for (i = 0; i < buffered.length; i++) {
+					const startX = buffered.start(i) * coef;
+					const endX = buffered.end(i) * coef;
+					const width = endX - startX;
+					context.fillRect(startX, 0, width, canvas.height);
+					context.rect(startX, 0, width, canvas.height);
+					context.stroke();
+				}
+			});
+		</script>
+
 		<!-- lesson_4 -->
-		<p class="super_element">Привет</p>
+		<!-- 		<p class="super_element">Привет</p>
 		<img src="https://placeimg.com/50/50/animals" alt="img" />
 		<img src="https://placeimg.com/50/50/arch" alt="img" />
 		<img src="https://placeimg.com/50/50/nature" alt="img" />
@@ -35,7 +64,7 @@
 			<li>
 				<button>Кнопка 4</button>
 			</li>
-		</ul>
+		</ul> -->
 
 		<!-- lesson_3 -->
 		<!-- 		<p class="dropdown">Привет :)</p>
@@ -75,6 +104,6 @@
 		<!-- <script src="lesson.js"></script> -->
 		<!-- <script src="lesson_2.js"></script> -->
 		<!-- <script src="lesson_3.js"></script> -->
-		<script src="lesson_4.js"></script>
+		<!-- <script src="lesson_4.js"></script> -->
 	</body>
 </html>
