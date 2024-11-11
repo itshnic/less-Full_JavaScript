@@ -8,16 +8,36 @@ fetch("data.json")
 		jsonData.forEach(el => {
 			addBlock(el);
 		});
+
 		const cards = container.querySelectorAll(".card");
 		cards.forEach(el => {
 			el.addEventListener("click", e => {
 				const id = searchIdByClick(e);
-				const elCart = checkElToCart(id, cartList);
-				elCart
-					? countUp(elCart)
-					: jsonData.forEach(el => {
-							if (el.id == id) addBlockCartList(el);
-					  });
+
+				let elCart = checkElToCart(id, cartList);
+
+				if (elCart) countUp(elCart);
+				else {
+					jsonData.forEach(el => {
+						if (el.id == id) {
+							addBlockCartList(el);
+
+							/* 		e.forEach(el => {
+									el.addEventListener("click", e => {
+										console.log(e.target);
+										countUp(parentBlock);
+									});
+								}); */
+						}
+					});
+				}
+
+				document.querySelectorAll(".cart__item").forEach(el => {
+					el.addEventListener("click", e => {
+						if (e.target.className == "cart__btn_plus") countUp(el);
+						if (e.target.className == "cart__btn_minus") countDown(el);
+					});
+				});
 			});
 		});
 	});
@@ -28,17 +48,23 @@ function searchIdByClick(e) {
 	return id[id.length - 1];
 }
 function checkElToCart(id, cart) {
-	const idAll = cart.querySelectorAll(".cart__item");
-	idAll.forEach(el => {
+	const elAll = cart.querySelectorAll(".cart__item");
+	let cartElement = false;
+	elAll.forEach(el => {
 		const cartId = el.querySelector(".cart__id").textContent;
-		console.log(cartId);
-		if (cartId == id) {
-			console.log(el);
-			return el;
-		}
+		if (cartId == id) cartElement = el;
 	});
+	return cartElement;
 }
-function countUp(el) {}
+function countUp(el) {
+	el.querySelector(".cart__count").textContent++;
+}
+
+function countDown(el) {
+	let count = el.querySelector(".cart__count").textContent;
+	if (count <= 1) el.remove();
+	else el.querySelector(".cart__count").textContent--;
+}
 
 function addBlock(el) {
 	const card = document.createElement("li");
@@ -94,14 +120,14 @@ function addBlockCartList(el) {
 	cartImg.setAttribute("alt", "foto");
 	cartItem.appendChild(cartImg);
 
-	const cartCount = document.createElement("span");
-	cartCount.classList.add("cart__count");
-	cartCount.textContent = 1;
-	cartItem.appendChild(cartCount);
-
 	const cartBtn = document.createElement("div");
 	cartBtn.classList.add("cart__btn");
 	cartItem.appendChild(cartBtn);
+
+	const cartCount = document.createElement("span");
+	cartCount.classList.add("cart__count");
+	cartCount.textContent = 1;
+	cartBtn.appendChild(cartCount);
 
 	const cartBtnPlus = document.createElement("span");
 	cartBtnPlus.classList.add("cart__btn_plus");
