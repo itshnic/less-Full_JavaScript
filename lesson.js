@@ -1,24 +1,25 @@
 "use strict";
-/* const arr = [1, 5, 7, 9];
+const getUserData = (id, url) => {
+	fetch(url)
+		.then(response => {
+			console.log(response);
+			const arr = response.json();
+			console.log(arr);
+			return arr;
+		})
+		.then(arrUsers => {
+			let userId = arrUsers.filter(user => {
+				if (user.id == id) return user;
+			})[0];
+			console.log(userId);
 
-const min = Math.min(...arr);
-console.log(min); */
+			if (userId) {
+				console.log(`prise: ${userId.price}`);
+			} else {
+				throw new Error(`Нет такого ${id}`);
+			}
+		})
+		.catch(error => console.error(error));
+};
 
-function count() {
-	let countNum = 0;
-	return {
-		increment() {
-			return ++countNum;
-		},
-		decrement() {
-			return --countNum;
-		},
-		getValue() {
-			return countNum;
-		},
-	};
-}
-const counter = count();
-console.log(counter.increment());
-console.log(counter.decrement());
-console.log(counter.getValue());
+getUserData("0015", "data.json");
