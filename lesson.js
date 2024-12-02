@@ -1,52 +1,31 @@
 "use strict";
-/* task - 1 */
-const getUserData = (id, url) => {
-	fetch(url)
-		.then(response => {
-			console.log(response);
-			const arr = response.json();
-			console.log(arr);
-			return arr;
-		})
-		.then(arrUsers => {
-			let userId = arrUsers.filter(user => {
-				if (user.id == id) return user;
-			})[0];
-			console.log(userId);
+const http = require("http");
 
-			if (userId) {
-				console.log(`prise: ${userId.price}`);
-			} else {
-				throw new Error(`Нет такого ${id}`);
-			}
-		})
-		.catch(error => console.error(error));
+const serverHTTP = port => {
+	let countOpenMain = 0;
+	let countOpenAbout = 0;
+
+	const server = http.createServer((req, res) => {
+		if (!countOpenMain) console.log("Server запущен");
+
+		if (req.url == "/") {
+			res.writeHead(200, { "Content-Type": "text/html;charset=UTF-8" });
+			countOpenMain++;
+			res.end(
+				`<a href="/about">Переход на Страницу обо мне</a>
+			<p>Главная страница открыта - ${countOpenMain} раз!!!</p>`
+			);
+		} else if (req.url == "/about") {
+			res.writeHead(200, { "Content-Type": "text/html;charset=UTF-8" });
+			countOpenAbout++;
+			res.end(`<a href="/">Переход на Главную страницу</a>
+			<p>Страница "Обо мне" открыта - ${countOpenAbout} раз!!!</p>`);
+		} else {
+			res.writeHead(404, { "Content-Type": "text/html;charset=UTF-8" });
+			res.end(`<a href="/">Ошибка 404</a>`);
+		}
+	});
+	server.listen(port);
+	console.log("Запрос отправлен");
 };
-
-getUserData("0012", "data.json");
-
-/* task - 2 */
-const saveUserData = (urlServer, urlUser) => {
-	const headPost = {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json;charset=utf-8",
-		},
-		body: JSON.stringify(urlUser),
-	};
-
-	fetch(urlServer, headPost)
-		.then(response => {
-			if (response.ok) console.log("User data saved successfully");
-			else throw new Error("Failed to save user data");
-		})
-		.catch(error => console.error(error));
-};
-
-/* task - 3 */
-
-const changeStyleDelayed = id => {
-	const el = document.querySelector(`#${id}`);
-	el.style.color = "black";
-};
-setTimeout(changeStyleDelayed, 1000, 112);
+serverHTTP(3000);
