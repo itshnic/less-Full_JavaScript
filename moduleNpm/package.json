@@ -1,0 +1,12 @@
+{
+	"name": "Mathematical_calculations",
+	"version": "1.0.0",
+	"description": "Mathematical calculations (+, -, /, *, degree, The root is square)",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"keywords": [],
+	"author": "Itshnic72",
+	"license": "ISC"
+}
