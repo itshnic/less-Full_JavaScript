@@ -1,5 +1,5 @@
 {
-	"name": "Mathematical_calculations",
+	"name": "calculations__math",
 	"version": "1.0.0",
 	"description": "Mathematical calculations (+, -, /, *, degree)",
 	"main": "index.js",
