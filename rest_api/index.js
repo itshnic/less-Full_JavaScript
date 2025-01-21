@@ -7,16 +7,11 @@ app.use(express.json());
 
 const fileName = "data.txt";
 
-let a = fs.open(fileName, "r", err => {
-	if (err) throw err;
-});
+if (!fs.existsSync(fileName)) {
+	writeDataUsers(fileName, []);
+}
 
-let dataUsers = readDataUsers(fileName);
-console.log(dataUsers);
-
-let users = Array.isArray(dataUsers) ? dataUsers : Array.from(dataUsers);
-
-let uniqueId = 0;
+let users = JSON.parse(readDataUsers(fileName));
 
 function writeDataUsers(path, data) {
 	try {
@@ -44,8 +39,10 @@ app.get("/users/:id", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-	uniqueId += 1;
-	console.log(req.body);
+	let uniqueId = 1;
+	if (users.length > 0) {
+		uniqueId = users[users.length - 1].id + 1;
+	}
 	users.push({
 		id: uniqueId,
 		...req.body,
