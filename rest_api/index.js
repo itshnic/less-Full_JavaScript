@@ -5,27 +5,33 @@ const app = express();
 
 app.use(express.json());
 
-let users = [];
+const fileName = "data.txt";
+
+let a = fs.open(fileName, "r", err => {
+	if (err) throw err;
+});
+
+let dataUsers = readDataUsers(fileName);
+console.log(dataUsers);
+
+let users = Array.isArray(dataUsers) ? dataUsers : Array.from(dataUsers);
 
 let uniqueId = 0;
 
 function writeDataUsers(path, data) {
 	try {
-		fs.writeFile(path, data);
+		fs.writeFileSync(path, JSON.stringify(data, null, 4));
 	} catch (error) {
-		console.error(error);
+		console.log("Ошибка записи файла");
 	}
 }
 
-const usersTest = function (path) {
-	try {
-		const result = JSON.parse(fs.readFile(path, utf8));
-		console.log(result);
-		return result;
-	} catch (error) {
-		console.error(error);
-	}
-};
+function readDataUsers(path) {
+	return fs.readFileSync(path, "utf8", (err, data) => {
+		if (err) console.log("Ошибка чтения файла");
+		else data;
+	});
+}
 
 app.get("/users", (req, res) => {
 	res.send({ users });
@@ -44,6 +50,7 @@ app.post("/users", (req, res) => {
 		id: uniqueId,
 		...req.body,
 	});
+	writeDataUsers(fileName, users);
 	res.send({ id: uniqueId });
 });
 
@@ -54,6 +61,7 @@ app.put("/users/:id", (req, res) => {
 		const { name, city } = req.body;
 		user.name = name;
 		user.city = city;
+		writeDataUsers(fileName, users);
 		res.send({ user });
 	} else res.send(`Пользователь id = ${userId} не найден`);
 });
@@ -63,6 +71,7 @@ app.delete("/users/:id", (req, res) => {
 	const user = users.find(user => user.id === userId);
 	if (user) {
 		users.splice(users.indexOf(user), 1);
+		writeDataUsers(fileName, users);
 		res.send(`Пользователь id = ${userId} удален`);
 	} else res.send(`Пользователь id = ${userId} не найден`);
 });
