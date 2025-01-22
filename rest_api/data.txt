@@ -1,32 +1,22 @@
 [
     {
         "id": 1,
-        "name": "Igor",
-        "city": "Omsk"
+        "name": "Roman",
+        "city": "Kyrgan"
     },
     {
         "id": 3,
-        "name": "Igor",
-        "city": "Omsk"
+        "name": "Roman",
+        "city": "Kyrgan"
     },
     {
         "id": 4,
-        "name": "Roman",
+        "name": "Юра",
         "city": "Kyrgan"
     },
     {
         "id": 5,
-        "name": "Roman",
-        "city": "Kyrgan"
-    },
-    {
-        "id": 6,
-        "name": "Roman",
-        "city": "Kyrgan"
-    },
-    {
-        "id": 7,
-        "name": "Roman",
-        "city": "Kyrgan"
+        "name": "Igor",
+        "city": "Omsk"
     }
 ]
