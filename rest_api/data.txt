@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Roman",
+        "city": "Kyrgan"
+    },
+    {
+        "id": 3,
+        "name": "Roman",
+        "city": "Kyrgan"
+    },
+    {
+        "id": 4,
+        "name": "Юра",
+        "city": "Kyrgan"
+    },
+    {
+        "id": 5,
+        "name": "Igor",
+        "city": "Omsk"
+    }
+]
