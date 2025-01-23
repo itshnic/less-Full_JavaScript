@@ -36,46 +36,57 @@ function readDataUsers(path) {
 		else data;
 	});
 }
+/**
+ * validData = scheme.validate(data) указываем свое имя схемы
+ */
+function checkToValidity(scheme, data, message, response) {
+	const validData = scheme.validate(data);
+	console.log(validData);
 
-app.get("/users", (req, res) => {
-	res.send({ users });
-});
-
-app.get("/users/:id", (req, res) => {
-	const validId = schemeValidId.validate(req.params);
-	if (validId.error) {
-		console.log(`В url не корректные данные ${validId.error.details}`);
-		return res
-			.status(400)
-			.send(
-				`В url не корректные данные ${JSON.stringify(
-					validId.error.details[0].context,
-					null,
-					4
-				)}`
-			);
-	}
-
-	const userId = +req.params.id;
-	const user = users.find(user => user.id === userId);
-	user ? res.send({ user }) : res.send(`Пользователь id = ${userId} не найден`);
-});
-
-app.post("/users", (req, res) => {
-	const validData = schemeValidData.validate(req.body);
 	if (validData.error) {
-		console.log(validData.error.details);
-		return res
+		console.log(message, validData.error.details);
+		return response
 			.status(400)
 			.send(
-				`Введены не корректные данные ${JSON.stringify(
+				`${message} ${JSON.stringify(
 					validData.error.details[0].context,
 					null,
 					4
 				)}`
 			);
 	}
+	return "right";
+}
 
+app.get("/users", (req, res) => {
+	res.send({ users });
+});
+
+app.get("/users/:id", (req, res) => {
+	const checkId = checkToValidity(
+		schemeValidId,
+		req.params,
+		"В url не корректные данные",
+		res
+	);
+	if (!(checkId == "right")) {
+		return checkId;
+	}
+	const userId = +req.params.id;
+	const user = users.find(user => user.id === userId);
+	user ? res.send({ user }) : res.send(`Пользователь id = ${userId} не найден`);
+});
+
+app.post("/users", (req, res) => {
+	const checkId = checkToValidity(
+		schemeValidData,
+		req.body,
+		"Введены не корректные данные",
+		res
+	);
+	if (!(checkId == "right")) {
+		return checkId;
+	}
 	let uniqueId = 1;
 	if (users.length > 0) {
 		uniqueId = users[users.length - 1].id + 1;
@@ -89,24 +100,14 @@ app.post("/users", (req, res) => {
 });
 
 app.put("/users/:id", (req, res) => {
-	const validId = schemeValidId.validate(req.params);
-	if (validId.error) {
-		console.log(
-			`В url не корректные данные ${JSON.stringify(
-				validId.error.details[0].context,
-				null,
-				4
-			)}`
-		);
-		return res
-			.status(400)
-			.send(
-				`В url не корректные данные ${JSON.stringify(
-					validId.error.details[0].context,
-					null,
-					4
-				)}`
-			);
+	const checkId = checkToValidity(
+		schemeValidId,
+		req.params,
+		"В url не корректные данные",
+		res
+	);
+	if (!(checkId == "right")) {
+		return checkId;
 	}
 
 	const userId = +req.params.id;
@@ -121,24 +122,14 @@ app.put("/users/:id", (req, res) => {
 });
 
 app.delete("/users/:id", (req, res) => {
-	const validId = schemeValidId.validate(req.params);
-	if (validId.error) {
-		console.log(
-			`В url не корректные данные ${JSON.stringify(
-				validId.error.details[0].context,
-				null,
-				4
-			)}`
-		);
-		return res
-			.status(400)
-			.send(
-				`В url не корректные данные ${JSON.stringify(
-					validId.error.details[0].context,
-					null,
-					4
-				)}`
-			);
+	const checkId = checkToValidity(
+		schemeValidId,
+		req.params,
+		"В url не корректные данные",
+		res
+	);
+	if (!(checkId == "right")) {
+		return checkId;
 	}
 
 	const userId = +req.params.id;
