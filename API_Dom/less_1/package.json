@@ -1,0 +1,16 @@
+{
+	"name": "less_1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "script.js",
+	"scripts": {
+		"start": "node script.js",
+		"demon": "nodemon script.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.21.2",
+		"nodemon": "^3.1.9"
+	}
+}
