@@ -1,0 +1,22 @@
+<div class="container">
+	<h1 class="title__form">Список уроков!</h1>
+	<ul class="lessons">
+		{{#each arrayData}}
+			<p class="lessons__item-name">{{this.name}}</p>
+			<p class="lessons__item-date">
+				Дата начала занятия: <span>{{this.date}}</span>
+			</p>
+			<p class="lessons__item-time">
+				Время начала занятия: <span>{{this.time}}</span>
+			</p>
+			<p class="countPeople_max">
+				Максимальное количество учеников: <span>{{this.maxCountPeoples}}</span>
+			</p>
+			<p class="countPeople_registered">
+				Зарегистрировалось учеников: <span class="_red">{{this.registrationCountPeoples}}</span>
+			</p>
+			<p class="lessons__item-textInfo _red">Мест нет!</p>
+			<button class="lessons__item-btn">Запись на занятие</button>
+		{{/each}}
+	</ul>
+</div>
