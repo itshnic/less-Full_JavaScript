@@ -1,10 +1,15 @@
 "use strict";
 const express = require("express");
 const fs = require("fs");
+const { engine } = require("express-handlebars");
 
 const app = express();
 
-let arrayData = [];
+app.use(express.static("static"));
+
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", "./views");
 
 const path = "./data.txt";
 
@@ -23,27 +28,20 @@ function readFile(path) {
 	});
 }
 
-/* function renderHtml(arrayData, classNameParent) {
-	if (arrayData) {
-		arrayData.forEach(el => {
-			const lessonsItem = document.createElement("li");
-			lessonsItem.classList.add = "lessons__item";
-			lessonsItem.textContent = `
-		`;
-			parentBlock.appendChild(lessonsItem);
-		});
-	} else console.log("Массив пуст!");
-} */
+let arrayData = JSON.parse(readFile(path));
 
 app.get("/", (req, res) => {
-	arrayData = readFile(path);
-	res.sendFile("static/index.html");
+	res.render("lessons", {
+		layout: "main",
+		title: "Запись на уроки!",
+		arrayData,
+	});
 });
 
 app.get("/", (req, res) => {
-	console.log(arrayData);
-	res.send(renderHtml(arrayData, "lessons"));
+	res.sendFile("./style.css");
 });
+
 app.listen(3000, () => {
 	console.log("Сервер запущен на порту 3000)");
 });
