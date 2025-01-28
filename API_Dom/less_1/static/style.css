@@ -62,6 +62,6 @@ span {
 .lessons__item-btn:active {
 	box-shadow: none;
 }
-.lessons__item-textInfo {
+._hide {
 	visibility: hidden;
 }
