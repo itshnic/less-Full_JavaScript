@@ -35,7 +35,7 @@ btn.forEach(el => {
 	el.addEventListener("click", e => {
 		const dataPeople = changeQuantityPeople(e.target);
 
-		fetch("http://localhost:3000/update", {
+		fetch({
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ key: dataPeople }),
