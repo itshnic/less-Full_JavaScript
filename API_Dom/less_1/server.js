@@ -13,20 +13,20 @@ app.set("views", "./views");
 
 const path = "./data.txt";
 
-function writeFile(path, data) {
+const writeFile = function (path, data) {
 	try {
 		fs.writeFileSync(path, JSON.stringify(data, null, 4));
 	} catch (error) {
 		console.log("Ошибка записи файла");
 	}
-}
+};
 
-function readFile(path) {
+const readFile = function (path) {
 	return fs.readFileSync(path, "utf8", (err, data) => {
 		if (err) console.log("Ошибка чтения файла");
 		else data;
 	});
-}
+};
 
 let arrayData = JSON.parse(readFile(path));
 
@@ -42,8 +42,13 @@ app.get("/", (req, res) => {
 	res.sendFile("./style.css");
 });
 
-app.post("/users", (req, res) => {
-	console.log(req.body);
+app.get("/user/:id&:count", (req, res) => {
+	console.log(`${req.params.id} и ${req.params.count}`);
+	arrayData.forEach(el => {
+		if (+req.params.id == el.id)
+			el.registrationCountPeoples = +req.params.count;
+		writeFile(path, arrayData);
+	});
 });
 
 app.listen(3000, () => {

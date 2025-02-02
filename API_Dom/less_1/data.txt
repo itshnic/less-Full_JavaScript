@@ -1,26 +1,26 @@
 [
-	{
-		"id": 1,
-		"name": "API_Dom",
-		"date": "25.01.25",
-		"time": "19:00",
-		"maxCountPeoples": 25,
-		"registrationCountPeoples": 22
-	},
-	{
-		"id": 2,
-		"name": "Java",
-		"date": "15.01.25",
-		"time": "19:00",
-		"maxCountPeoples": 25,
-		"registrationCountPeoples": 5
-	},
-	{
-		"id": 3,
-		"name": "Node js",
-		"date": "05.01.25",
-		"time": "19:00",
-		"maxCountPeoples": 25,
-		"registrationCountPeoples": 12
-	}
+    {
+        "id": 1,
+        "name": "API_Dom",
+        "date": "25.01.25",
+        "time": "19:00",
+        "maxCountPeoples": 15,
+        "registrationCountPeoples": 25
+    },
+    {
+        "id": 2,
+        "name": "Java",
+        "date": "15.01.25",
+        "time": "19:00",
+        "maxCountPeoples": 25,
+        "registrationCountPeoples": 16
+    },
+    {
+        "id": 3,
+        "name": "Node js",
+        "date": "05.01.25",
+        "time": "19:00",
+        "maxCountPeoples": 25,
+        "registrationCountPeoples": 20
+    }
 ]
