@@ -28,12 +28,21 @@ function changeQuantityPeople(element) {
 		}
 	}
 
-	return { id: idLesson, countPeople: countPeopleRegistered };
+	return { id: idLesson, count: countPeopleRegistered };
 }
 
 btn.forEach(el => {
 	el.addEventListener("click", function (e) {
 		const dataUser = changeQuantityPeople(this);
-		fetch(`/user/${dataUser.id}&${dataUser.countPeople}`);
+		/* fetch(`/user/${dataUser.id}&${dataUser.countPeople}`); */
+		fetch("/user", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(dataUser),
+		})
+			.then(response => console.log(response.json()))
+			.then(result => JSON.stringify(result, null, 2));
 	});
 });

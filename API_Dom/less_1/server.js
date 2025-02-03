@@ -6,6 +6,7 @@ const { engine } = require("express-handlebars");
 const app = express();
 
 app.use(express.static("static"));
+app.use(express.json());
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -42,11 +43,19 @@ app.get("/", (req, res) => {
 	res.sendFile("./style.css");
 });
 
-app.get("/user/:id&:count", (req, res) => {
+/* app.get("/user/:id&:count", (req, res) => {
 	console.log(`${req.params.id} и ${req.params.count}`);
 	arrayData.forEach(el => {
 		if (+req.params.id == el.id)
 			el.registrationCountPeoples = +req.params.count;
+		writeFile(path, arrayData);
+	});
+}); */
+
+app.post("/user/", (req, res) => {
+	console.log(`${req.body.id} и ${req.body.count}`);
+	arrayData.forEach(el => {
+		if (+req.body.id == el.id) el.registrationCountPeoples = +req.body.count;
 		writeFile(path, arrayData);
 	});
 });
