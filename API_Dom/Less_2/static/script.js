@@ -1,17 +1,41 @@
 "use strict";
-const item = document.querySelector(".slider__item");
-/* const items = list.querySelectorAll(".slider__item"); */
-const points = document.querySelectorAll(".slider__points");
+
 const btn_left = document.querySelector(".slider__arrow_left");
 const btn_right = document.querySelector(".slider__arrow_right");
 
+const classToggle = (itemHtml, modifier, flag) => {
+	if (flag == "next") {
+		if (
+			itemHtml.nextElementSibling &&
+			itemHtml.nextElementSibling.getAttribute("data_id_item")
+		) {
+			itemHtml.classList.toggle(modifier);
+			itemHtml.nextElementSibling.classList.toggle(modifier);
+		}
+	} else {
+		if (
+			itemHtml.previousElementSibling &&
+			itemHtml.previousElementSibling.getAttribute("data_id_item")
+		) {
+			itemHtml.classList.toggle(modifier);
+			itemHtml.previousElementSibling.classList.toggle(modifier);
+		}
+	}
+};
+
 const clickBtn = function (btn_name, flag) {
 	btn_name.addEventListener("click", e => {
-		let id = +item.getAttribute("data_id_item");
-		id++;
-		item.querySelector(".slider__img").getAttribute("src")=`img/foto_${id}.jpg`;
-		console.log(id);
+		const item = document.querySelector("._active");
+		const bigDot = document.querySelector("._big");
+
+		if (flag == "left") {
+			classToggle(item, "_active", "previous");
+			classToggle(bigDot, "_big", "previous");
+		} else {
+			classToggle(item, "_active", "next");
+			classToggle(bigDot, "_big", "next");
+		}
 	});
 };
-clickBtn(btn_left);
-clickBtn(btn_right);
+clickBtn(btn_left, "left");
+clickBtn(btn_right, "right");

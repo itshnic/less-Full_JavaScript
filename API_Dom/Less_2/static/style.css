@@ -11,12 +11,15 @@
 	flex-direction: column;
 	gap: 20px;
 	padding: 10px;
+	justify-content: center;
 }
 .slider__list {
 	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .slider__item {
-	max-width: 800px;
 	height: 80vh;
 	overflow: hidden;
 	display: flex;
@@ -25,10 +28,15 @@
 	flex-direction: column;
 	padding-bottom: 40px;
 	gap: 10px;
+	display: none;
+	text-align: center;
 }
 .slider__img {
 	height: 100%;
 	width: auto;
+}
+._active {
+	display: block;
 }
 .slider__arrow {
 	position: absolute;
@@ -36,7 +44,6 @@
 	width: 920px;
 	display: flex;
 	justify-content: space-between;
-	margin-left: -60px;
 }
 .slider__arrow_right,
 .slider__arrow_left {
@@ -47,10 +54,10 @@
 	transition: border-bottom 0.3s ease;
 }
 .slider__arrow_right {
-	transform: rotate(-90deg);
+	transform: rotate(90deg);
 }
 .slider__arrow_left {
-	transform: rotate(90deg);
+	transform: rotate(-90deg);
 }
 .slider__arrow_right:hover,
 .slider__arrow_left:hover {

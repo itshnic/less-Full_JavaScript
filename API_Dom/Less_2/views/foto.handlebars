@@ -1,18 +1,20 @@
 <div class="container">
 	<h1 class="slider__title">Фотогалерея</h1>
 	<ul class="slider__list">
-		<li data_id_item = "{{id}}" class="slider__item">
-			<img src="img/{{file_1}}" alt="image" class="slider__img" />
-			<p class="slider__text">{{text_1}}</p>
+		{{#each arrayData}}
+		<li data_id_item = "{{this.id}}" class="slider__item {{#if this.flag}} _active {{/if}}">
+			<img src="img/{{this.file}}" alt="image" class="slider__img" />
+			<p class="slider__text">{{this.text}}</p>
 		</li>
+		{{/each}}
 		<div class="slider__arrow">
-			<span class="slider__arrow_right"></span>
 			<span class="slider__arrow_left"></span>
+			<span class="slider__arrow_right"></span>
 		</div>
 	</ul>
 	<div class="slider__points">
 		{{#each arrayData}}
-		<span data_id="{{this.id}}" class="slider__point 			{{#if this.flag}} _big {{/if}}"></span>
+		<span data_id_item="{{this.id}}" class="slider__point 			{{#if this.flag}} _big {{/if}}"></span>
 		{{/each}}
 	</div>
 </div>

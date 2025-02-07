@@ -35,9 +35,6 @@ app.get("/", (req, res) => {
 	res.render("foto", {
 		layout: "main",
 		title: "Фотогалерея",
-		id: arrayData[0].id,
-		file_1: arrayData[0].file,
-		text_1: arrayData[0].text,
 		arrayData,
 	});
 });
