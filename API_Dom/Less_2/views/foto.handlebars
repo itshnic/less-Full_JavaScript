@@ -1,8 +1,8 @@
 <div class="container">
-	<h1 class="slider__title">Фотогалерея</h1>
+	<h1 class="slider__title">ЖЕКА ШЕСТАКОВ</h1>
 	<ul class="slider__list">
 		{{#each arrayData}}
-		<li data_id_item = "{{this.id}}" class="slider__item {{#if this.flag}} _active {{/if}}">
+		<li id = "{{this.id}}" class="slider__item {{#if this.flag}} _active {{/if}}">
 			<img src="img/{{this.file}}" alt="image" class="slider__img" />
 			<p class="slider__text">{{this.text}}</p>
 		</li>
@@ -14,7 +14,7 @@
 	</ul>
 	<div class="slider__points">
 		{{#each arrayData}}
-		<span data_id_item="{{this.id}}" class="slider__point 			{{#if this.flag}} _big {{/if}}"></span>
+		<span id="{{this.id}}" class="slider__point 			{{#if this.flag}} _big {{/if}}"></span>
 		{{/each}}
 	</div>
 </div>

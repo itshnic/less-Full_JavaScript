@@ -2,37 +2,37 @@
 	{
 		"id":1,
 		"file":"foto_1.jpg",
-		"text":"Природа в красках",
+		"text":"Женечка",
 		"flag":true
 	},
 	{
 		"id":2,
 		"file":"foto_2.jpg",
-		"text":"Водопады",
+		"text":"Жека",
 		"flag":false
 	},
 	{
 		"id":3,
 		"file":"foto_3.jpg",
-		"text":"Горный хребет",
+		"text":"Жулик",
 		"flag":false
 	},
 	{
 		"id":4,
 		"file":"foto_4.jpg",
-		"text":"Насыщенность цветов",
+		"text":"мама",
 		"flag":false
 	},
 	{
 		"id":5,
 		"file":"foto_5.jpg",
-		"text":"Прекрасное настроение",
+		"text":"папа",
 		"flag":false
 	},
 	{
 		"id":6,
 		"file":"foto_6.jpg",
-		"text":"Необычность красок",
+		"text":"вита",
 		"flag":false
 	}
 ]

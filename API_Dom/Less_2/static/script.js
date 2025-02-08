@@ -7,15 +7,16 @@ const classToggle = (itemHtml, modifier, flag) => {
 	if (flag == "next") {
 		if (
 			itemHtml.nextElementSibling &&
-			itemHtml.nextElementSibling.getAttribute("data_id_item")
+			itemHtml.nextElementSibling.getAttribute("id")
 		) {
 			itemHtml.classList.toggle(modifier);
 			itemHtml.nextElementSibling.classList.toggle(modifier);
 		}
-	} else {
+	}
+	if (flag == "previous") {
 		if (
 			itemHtml.previousElementSibling &&
-			itemHtml.previousElementSibling.getAttribute("data_id_item")
+			itemHtml.previousElementSibling.getAttribute("id")
 		) {
 			itemHtml.classList.toggle(modifier);
 			itemHtml.previousElementSibling.classList.toggle(modifier);
