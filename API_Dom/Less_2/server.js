@@ -34,7 +34,7 @@ let arrayData = JSON.parse(readFile(path));
 app.get("/", (req, res) => {
 	res.render("foto", {
 		layout: "main",
-		title: "Фотогалерея",
+		title: "ЖЕКА ШЕСТАКОВ",
 		arrayData,
 	});
 });
