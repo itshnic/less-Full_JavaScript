@@ -14,8 +14,11 @@
 }
 .list__item {
 	cursor: pointer;
-	transition: all 1s ease;
+
 	position: relative;
+}
+.list__item img:hover {
+	box-shadow: 1px 0px 31px 2px rgba(34, 60, 80, 0.88);
 }
 .list__item span {
 	position: absolute;
@@ -30,10 +33,17 @@
 	justify-content: center;
 	align-items: center;
 }
-.list__item:hover {
+.list__item span::before {
+	content: "👍";
+	position: absolute;
+	bottom: 24px;
+}
+.list__item img:hover {
 	box-shadow: 1px 0px 31px 2px rgba(34, 60, 80, 0.88);
 }
-
-.list__item:active {
+.list__item img {
+	transition: all 1s ease;
+}
+.list__item img:active {
 	box-shadow: none;
 }
