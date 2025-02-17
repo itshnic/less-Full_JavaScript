@@ -32,9 +32,10 @@ for (const album of musicCollection) {
 /* Less_1-2 */
 
 const cook = ["Виктор", "Ольга", "Дмитрий"];
+const specialization = ["Pizza", "Sushi", "dessert"];
 const dishes = {
 	Pizza: ["Маргарита", "Пепперони"],
 	Sushi: ["Филадельфия", "Калифорния"],
 	dessert: ["Тирамису ", "Чизкейк"],
 };
-const client = ["Алексей ", "Мария ", "Ирина "];
+const client = ["Алексей", "Мария", "Ирина"];
