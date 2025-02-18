@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 }
-.zakaz__conteiner {
+.order__container {
 	width: 800px;
 	margin: 0 auto;
 	margin-top: 20px;
@@ -11,28 +11,34 @@
 	display: flex;
 	justify-content: center;
 }
-.zakaz__form {
+.order__form {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 	max-width: 500px;
 	text-align: center;
 }
-.zakaz__title {
+.order__title {
 	font-size: 24px;
 	font-weight: 700;
 }
-.zakaz__form_client::placeholder {
+.order__form_client::placeholder {
 	color: rgba(155, 154, 154, 0.539);
 }
-.zakaz__form_client {
+.order__form_client {
 	padding: 2px 5px;
 	border: none;
 }
-.zakaz__check {
+
+.order__check {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+.add__dish {
+	display: flex;
+	gap: 20px;
+	justify-content: center;
 }
 .check__body {
 	display: flex;
@@ -68,7 +74,7 @@
 	text-align: center;
 	border: none;
 }
-.zakaz__btn,
+.order__btn,
 .check__body_dish {
 	display: flex;
 	justify-content: center;
@@ -78,7 +84,7 @@
 	max-width: 150px;
 	padding: 3px 10px;
 }
-._smal {
+._small {
 	width: 20px;
 	height: 20px;
 }
