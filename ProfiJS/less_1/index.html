@@ -3,9 +3,41 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
 		<title>Document</title>
 	</head>
 	<body>
+		<div class="zakaz__conteiner">
+			<form action="#" class="zakaz__form">
+				<h2 class="zakaz__title">Заказ блюда</h2>
+				<input class="zakaz__form_client" type="text" placeholder="Клиент" />
+				<div class="zakaz__check">
+					<h3 class="zakaz__check">Check</h3>
+					<div class="check__body">
+						<button class="btn__dish btn _smal _plus"></button>
+						<button class="btn__dish btn _smal _minus"></button>
+						<div class="check__body_dish">
+							<select name="category__dishes">
+								<option value="Pizza">Pizza</option>
+								<option value="Sushi">Sushi</option>
+								<option value="Dessert">Dessert</option>
+							</select>
+							<select name="category__dishes_vid">
+								<option value="Margarita">Маргарита</option>
+								<option value="Pepperoni">Пепперони</option>
+							</select>
+						</div>
+						<button class="count__dish_btn btn _smal _plus"></button>
+						<input class="count__dish_txt" type="text" />
+						<button class="count__dish_btn btn _smal _minus"></button>
+					</div>
+				</div>
+				<div class="zakaz__btn">
+					<button class="btn _big" type="submit">Заказать</button>
+					<button class="btn _big" disabled="disabled">Очистить заказ</button>
+				</div>
+			</form>
+		</div>
 		<script src="script.js"></script>
 	</body>
 </html>

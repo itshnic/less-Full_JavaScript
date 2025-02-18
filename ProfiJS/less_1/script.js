@@ -1,6 +1,6 @@
 "use strict";
 /* Less_1-1 */
-const musicCollection = [
+/* const musicCollection = [
 	{ title: "Осень", artist: "Чайф", year: "2009" },
 	{ title: "Зима", artist: "Звери", year: "2015" },
 	{ title: "Лето", artist: "Asti", year: "2018" },
@@ -27,7 +27,7 @@ for (const album of musicCollection) {
 	for (const el of album) {
 		console.log(el);
 	}
-}
+} */
 
 /* Less_1-2 */
 
@@ -36,6 +36,6 @@ const specialization = ["Pizza", "Sushi", "dessert"];
 const dishes = {
 	Pizza: ["Маргарита", "Пепперони"],
 	Sushi: ["Филадельфия", "Калифорния"],
-	dessert: ["Тирамису ", "Чизкейк"],
+	Dessert: ["Тирамису ", "Чизкейк"],
 };
 const client = ["Алексей", "Мария", "Ирина"];
