@@ -32,13 +32,17 @@ for (const album of musicCollection) {
 /* Less_1-2 */
 
 const setCountDishes = function (arrayBtn) {
-	arrayBtn.forEach(el => {
+	console.log(arrayBtn);
+
+	Array.from(arrayBtn).forEach(el => {
 		el.addEventListener("click", e => {
 			const parent = e.target.closest(".check__body");
+			/* console.log(parent); */
 			let count = parent.querySelector(".count__dish_txt");
+			/* console.log(count.value); */
 			if (e.target.classList.contains("_minus") && count.value > 1)
-				--count.value;
-			else if (e.target.classList.contains("_plus")) ++count.value;
+				count.value--;
+			else if (e.target.classList.contains("_plus")) count.value++;
 		});
 	});
 };
@@ -50,27 +54,87 @@ const resetForm = function (btn, element) {
 				el.remove();
 			});
 		} else element.remove();
+		e.stopPropagation();
 	});
 };
 
 const deleteElement = function (arrayBtn) {
 	arrayBtn.forEach(el => {
 		el.addEventListener("click", e => {
-			e.target.closest(".check__body").remove();
+			const block = e.target.closest(".check__body");
+			console.log(block);
+			block.remove();
+			e.stopPropagation();
 		});
 	});
 };
 
-const renderHtmlInSelect = function (data, pattern, placeInBlock) {
+const patternAddOptionHtml = function (el, placeInBlock) {
+	const item = document.createElement("option");
+	item.value = el;
+	item.textContent = el;
+	placeInBlock.appendChild(item);
+};
+const patternAddCheckBlock = function (id) {
+	const item = document.createElement("div");
+	item.className = "check__body";
+	item.setAttribute("id", id);
+	item.innerHTML = `<button type="button" class="remove__dish_btn btn _small _minus"></button>
+						<div class="check__body_dish">
+							<select name="category__dishes">
+								<option value="">Выберите блюдо</option>
+							</select>
+							<select name="category__dishes_vid">
+								<option value="">Название</option>
+							</select>
+						</div>
+						<button type="button" class="count__dish_btn btn _small _plus"></button>
+						<input class="count__dish_txt" type="text" value="1" />
+						<button type="button" class="count__dish_btn btn _small _minus"></button>`;
+	document.querySelector(".order__check").appendChild(item);
+};
+
+const renderHtmlInSelect = function (data, placeInBlock) {
 	if (Array.isArray(data)) {
-		data.forEach(el => {});
+		data.forEach(el => {
+			patternAddOptionHtml(el, placeInBlock);
+		});
+	} else {
+		for (const key in data) {
+			patternAddOptionHtml(key, placeInBlock);
+		}
 	}
 };
 
+let getDataFromServer = (url, id) => {
+	fetch(url)
+		.then(response => response.json())
+		.then(response => {
+			/* 		console.log(response); */
+			patternAddCheckBlock(id);
+			const placeInBlock = document
+				.getElementById(id)
+				.querySelector('[name="category__dishes"]');
+			/* console.log(placeInBlock); */
+			renderHtmlInSelect(response, placeInBlock);
+			setCountDishes(document.querySelectorAll(".count__dish_btn"));
+			resetForm(
+				document.querySelector("button[type='reset']"),
+				document.querySelectorAll(".check__body")
+			);
+			deleteElement(document.querySelectorAll(".remove__dish_btn"));
+		});
+};
+
+const addOptionHtml = function () {
+	const addDish = document.querySelector(".add__dish_btn");
+	let id = 1;
+	addDish.addEventListener("click", e => {
+		getDataFromServer("/data", id++);
+		e.stopPropagation();
+	});
+};
+
 /* Вызовы ф-й */
-setCountDishes(document.querySelectorAll(".count__dish_btn"));
-resetForm(
-	document.querySelector("button[type='reset']"),
-	document.querySelectorAll(".check__body")
-);
-deleteElement(document.querySelectorAll(".remove__dish_btn"));
+
+addOptionHtml();

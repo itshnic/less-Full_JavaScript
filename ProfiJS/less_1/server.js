@@ -21,11 +21,14 @@ const dishes = {
 const client = {};
 
 app.get("/", (req, res) => {
-	const dishesStr = JSON.stringify(dishes, null, 4);
 	res.render("order", {
 		layout: "main",
 		title: "Заказ на кухню",
 	});
+});
+app.get("/data", (req, res) => {
+	const dishesStr = JSON.stringify(dishes, null, 4);
+	res.send(dishesStr);
 });
 
 app.listen(3000, () => {
