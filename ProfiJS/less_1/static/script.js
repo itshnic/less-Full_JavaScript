@@ -31,20 +31,42 @@ for (const album of musicCollection) {
 
 /* Less_1-2 */
 
-const setCountDishes = function (arrayBtn) {
-	console.log(arrayBtn);
+const setCountDishes = function (event) {
+	if (event.target.classList.contains("count__dish_btn")) {
+		let count = event.target
+			.closest(".check__body")
+			.querySelector(".count__dish_txt");
+		if (event.target.classList.contains("_minus") && count.value > 1)
+			count.value--;
+		else if (event.target.classList.contains("_plus")) count.value++;
+	}
+};
 
-	Array.from(arrayBtn).forEach(el => {
-		el.addEventListener("click", e => {
-			const parent = e.target.closest(".check__body");
-			/* console.log(parent); */
-			let count = parent.querySelector(".count__dish_txt");
-			/* console.log(count.value); */
-			if (e.target.classList.contains("_minus") && count.value > 1)
-				count.value--;
-			else if (e.target.classList.contains("_plus")) count.value++;
-		});
-	});
+const deleteElement = function (event) {
+	if (event.target.classList.contains("_remove")) {
+		event.target.closest(".check__body").remove();
+	}
+};
+
+const checkedItemSelect = event => {
+	console.log(event);
+	console.log(event.target.textContent);
+	console.log(event.target.parentElement);
+
+	const parentBlok = event.target.classList.contains("check__body_dish");
+	if (parentBlok) {
+		const valueName = event.target.value;
+		const placeInBlock = parentBlok.querySelector(".category__dishes_vid");
+		placeInBlock.innerHTML = "";
+		console.log(valueName);
+		renderHtmlInSelect(response.valueName, placeInBlock);
+	}
+};
+
+const clickBtn = staticBlock => {
+	staticBlock.addEventListener("click", setCountDishes);
+	staticBlock.addEventListener("click", deleteElement);
+	staticBlock.addEventListener("change", checkedItemSelect);
 };
 
 const resetForm = function (btn, element) {
@@ -53,19 +75,9 @@ const resetForm = function (btn, element) {
 			element.forEach(el => {
 				el.remove();
 			});
-		} else element.remove();
-		e.stopPropagation();
-	});
-};
-
-const deleteElement = function (arrayBtn) {
-	arrayBtn.forEach(el => {
-		el.addEventListener("click", e => {
-			const block = e.target.closest(".check__body");
-			console.log(block);
-			block.remove();
-			e.stopPropagation();
-		});
+		} else {
+			element.remove();
+		}
 	});
 };
 
@@ -75,16 +87,17 @@ const patternAddOptionHtml = function (el, placeInBlock) {
 	item.textContent = el;
 	placeInBlock.appendChild(item);
 };
+
 const patternAddCheckBlock = function (id) {
 	const item = document.createElement("div");
 	item.className = "check__body";
 	item.setAttribute("id", id);
-	item.innerHTML = `<button type="button" class="remove__dish_btn btn _small _minus"></button>
+	item.innerHTML = `<button type="button" class="_remove btn _small">-</button>
 						<div class="check__body_dish">
-							<select name="category__dishes">
+							<select class="check__body_d" name="category__dishes">
 								<option value="">Выберите блюдо</option>
 							</select>
-							<select name="category__dishes_vid">
+							<select class="check__body_v" name="category__dishes_vid">
 								<option value="">Название</option>
 							</select>
 						</div>
@@ -117,12 +130,13 @@ let getDataFromServer = (url, id) => {
 				.querySelector('[name="category__dishes"]');
 			/* console.log(placeInBlock); */
 			renderHtmlInSelect(response, placeInBlock);
-			setCountDishes(document.querySelectorAll(".count__dish_btn"));
+
+			clickBtn(document.querySelector(".order__check"));
+
 			resetForm(
 				document.querySelector("button[type='reset']"),
 				document.querySelectorAll(".check__body")
 			);
-			deleteElement(document.querySelectorAll(".remove__dish_btn"));
 		});
 };
 
@@ -131,7 +145,6 @@ const addOptionHtml = function () {
 	let id = 1;
 	addDish.addEventListener("click", e => {
 		getDataFromServer("/data", id++);
-		e.stopPropagation();
 	});
 };
 
