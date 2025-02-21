@@ -48,14 +48,17 @@ const deleteElement = function (event) {
 	}
 };
 
-const checkedItemSelect = (event, response) => {
+const checkedItemSelect = event => {
 	const parentBlok = event.target.closest(".check__body_dish");
 	if (parentBlok) {
 		const valueName = event.target.value;
 		const placeInBlock = parentBlok.querySelector(".check__body_v");
 		placeInBlock.innerHTML = "";
-		console.log(valueName);
-		return [valueName, placeInBlock];
+		const arr = [];
+		arr.push(valueName).push(placeInBlock);
+		console.log(arr);
+
+		return arr;
 	}
 	return null;
 };
@@ -63,8 +66,27 @@ const checkedItemSelect = (event, response) => {
 const clickBtn = (staticBlock, response) => {
 	staticBlock.addEventListener("click", setCountDishes);
 	staticBlock.addEventListener("click", deleteElement);
-	const valueName = staticBlock.addEventListener("input", checkedItemSelect);
-	if (valueName) renderHtmlInSelect(response.valueName[0], valueName[1]);
+	staticBlock.addEventListener("input", event => {
+		const parentBlok = event.target.closest(".check__body_dish");
+		if (parentBlok) {
+			const valueName = event.target.value;
+			const placeInBlock = parentBlok.querySelector(".check__body_v");
+			placeInBlock.innerHTML = "";
+			const array = [];
+
+			for (const key in response) {
+				console.log(key);
+				console.log(response);
+				if (key == valueName) {
+					console.log(key);
+					array = response.key;
+				}
+			}
+
+			console.log(array);
+			renderHtmlInSelect(response.valueName, placeInBlock);
+		}
+	});
 };
 
 const resetForm = function (btn, element) {
@@ -106,8 +128,8 @@ const patternAddCheckBlock = function (id) {
 };
 
 const renderHtmlInSelect = function (data, placeInBlock) {
-	console.log(placeInBlock);
-	console.log(data);
+	/* 	console.log(placeInBlock);
+	console.log(data); */
 	if (Array.isArray(data)) {
 		data.forEach(el => {
 			patternAddOptionHtml(el, placeInBlock);
