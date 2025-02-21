@@ -36,9 +36,11 @@ const setCountDishes = function (event) {
 		let count = event.target
 			.closest(".check__body")
 			.querySelector(".count__dish_txt");
-		if (event.target.classList.contains("_minus") && count.value > 1)
+		if (event.target.classList.contains("_minus") && count.value > 1) {
 			count.value--;
-		else if (event.target.classList.contains("_plus")) count.value++;
+		} else if (event.target.classList.contains("_plus")) {
+			count.value++;
+		}
 	}
 };
 
@@ -48,49 +50,27 @@ const deleteElement = function (event) {
 	}
 };
 
-const checkedItemSelect = event => {
-	const parentBlok = event.target.closest(".check__body_dish");
-	if (parentBlok) {
+const checkedItemSelect = (event, response) => {
+	if (event.target.classList.contains("check__dish_category")) {
+		const parentBlok = event.target.closest(".check__body_dish");
 		const valueName = event.target.value;
-		const placeInBlock = parentBlok.querySelector(".check__body_v");
-		placeInBlock.innerHTML = "";
-		const arr = [];
-		arr.push(valueName).push(placeInBlock);
-		console.log(arr);
-
-		return arr;
+		const placeInBlock = parentBlok.querySelector(".check__dish_name");
+		placeInBlock.innerHTML = `<option value="">Название</option>`;
+		renderHtmlInSelect(response[valueName], placeInBlock);
 	}
-	return null;
 };
 
 const clickBtn = (staticBlock, response) => {
 	staticBlock.addEventListener("click", setCountDishes);
 	staticBlock.addEventListener("click", deleteElement);
-	staticBlock.addEventListener("input", event => {
-		const parentBlok = event.target.closest(".check__body_dish");
-		if (parentBlok) {
-			const valueName = event.target.value;
-			const placeInBlock = parentBlok.querySelector(".check__body_v");
-			placeInBlock.innerHTML = "";
-			const array = [];
-
-			for (const key in response) {
-				console.log(key);
-				console.log(response);
-				if (key == valueName) {
-					console.log(key);
-					array = response.key;
-				}
-			}
-
-			console.log(array);
-			renderHtmlInSelect(response.valueName, placeInBlock);
-		}
+	staticBlock.addEventListener("change", event => {
+		checkedItemSelect(event, response);
+		event.stopImmediatePropagation();
 	});
 };
 
 const resetForm = function (btn, element) {
-	btn.addEventListener("click", () => {
+	btn.addEventListener("click", event => {
 		if (element.length) {
 			element.forEach(el => {
 				el.remove();
@@ -114,10 +94,10 @@ const patternAddCheckBlock = function (id) {
 	item.setAttribute("id", id);
 	item.innerHTML = `<button type="button" class="_remove btn _small">-</button>
 						<div class="check__body_dish">
-							<select class="check__body_d" name="category__dishes">
+							<select class="check__dish_category" name="category__dishes">
 								<option value="">Выберите блюдо</option>
 							</select>
-							<select class="check__body_v" name="category__dishes_vid">
+							<select class="check__dish_name" name="category__dishes_vid">
 								<option value="">Название</option>
 							</select>
 						</div>
@@ -128,8 +108,6 @@ const patternAddCheckBlock = function (id) {
 };
 
 const renderHtmlInSelect = function (data, placeInBlock) {
-	/* 	console.log(placeInBlock);
-	console.log(data); */
 	if (Array.isArray(data)) {
 		data.forEach(el => {
 			patternAddOptionHtml(el, placeInBlock);
@@ -145,12 +123,10 @@ let getDataFromServer = (url, id) => {
 	fetch(url)
 		.then(response => response.json())
 		.then(response => {
-			/* 		console.log(response); */
 			patternAddCheckBlock(id);
 			const placeInBlock = document
 				.getElementById(id)
 				.querySelector('[name="category__dishes"]');
-			/* console.log(placeInBlock); */
 			renderHtmlInSelect(response, placeInBlock);
 
 			clickBtn(document.querySelector(".order__check"), response);
