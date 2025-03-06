@@ -11,13 +11,27 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
-const cook = ["Виктор", "Ольга", "Дмитрий"];
+const cook = {
+	Victor: "Виктор",
+	Olga: "Ольга",
+	Dima: "Дмитрий",
+};
 
 const dishes = {
 	Pizza: ["Маргарита", "Пепперони"],
 	Sushi: ["Филадельфия", "Калифорния"],
 	Dessert: ["Тирамису ", "Чизкейк"],
 };
+
+const cookForDishes = new Map();
+
+cookForDishes
+	.set(cook.Dima, "Pizza")
+	.set(cook.Olga, "Dessert")
+	.set(cook.Victor, "Sushi");
+
+console.log(cookForDishes);
+
 const client = {};
 
 app.get("/", (req, res) => {
@@ -29,6 +43,10 @@ app.get("/", (req, res) => {
 app.get("/data", (req, res) => {
 	const dishesStr = JSON.stringify(dishes, null, 4);
 	res.send(dishesStr);
+});
+
+app.get("/form", (req, res) => {
+	const body = res.body;
 });
 
 app.listen(3000, () => {

@@ -146,6 +146,13 @@ const addOptionHtml = function () {
 	});
 };
 
+const btnForm = document.querySelector(".btnForm");
+btnForm.addEventListener("submit", e => {
+	const form = new FormData(document.querySelector(".order__form"));
+	console.log(form);
+	e.preventDefault();
+});
+
 /* Вызовы ф-й */
 
 addOptionHtml();

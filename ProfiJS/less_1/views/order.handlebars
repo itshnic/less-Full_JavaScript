@@ -1,5 +1,5 @@
 <div class="order__container">
-			<form class="order__form">
+			<form class="order__form" action='/form' method='post'>
 				<h2 class="order__title">Заказ:</h2>
 				<input class="order__form_client" type="text" placeholder="Клиент" />
 				<div class="order__check">
@@ -8,8 +8,16 @@
 						<button type='button' class="add__dish_btn btn _small _add">+</button>
 					</div>
 				</div>
+				<div class="popup">
+					<span>Имя</span>
+					<span>Имя</span>
+					<span>Имя</span>
+					<span>Имя</span>
+					<span>Имя</span>
+					<button class="btn _big">Скрыть</button>
+				</div>
 				<div class="order__btn">
-					<button class="btn _big" type="submit">Заказать</button>
+					<button class="btn _big btnForm" type="submit">Заказать</button>
 					<button class="btn _big" type="reset">Очистить заказ</button>
 				</div>
 			</form>
