@@ -147,10 +147,22 @@ const addOptionHtml = function () {
 };
 
 const btnForm = document.querySelector(".btnForm");
-btnForm.addEventListener("submit", e => {
-	const form = new FormData(document.querySelector(".order__form"));
-	console.log(form);
+btnForm.addEventListener("click", e => {
 	e.preventDefault();
+	let data = new FormData(document.querySelector(".order__form"));
+
+	for (let [key, value] of data) {
+		console.log(`${key} - ${value}`);
+	}
+
+	fetch("/post", {
+		method: "POST",
+		body: data,
+	})
+		.then(response => response.json())
+		.then(response => {
+			console.log(response);
+		});
 });
 
 /* Вызовы ф-й */

@@ -30,7 +30,7 @@ cookForDishes
 	.set(cook.Olga, "Dessert")
 	.set(cook.Victor, "Sushi");
 
-console.log(cookForDishes);
+let obj = Object.fromEntries(cookForDishes);
 
 const client = {};
 
@@ -45,8 +45,12 @@ app.get("/data", (req, res) => {
 	res.send(dishesStr);
 });
 
-app.get("/form", (req, res) => {
-	const body = res.body;
+app.post("/post", (req, res) => {
+	const body = req.body;
+	for (let [key, value] of body) {
+		console.log(`${key} - ${value}`);
+	}
+	res.send(JSON.stringify(obj, null, 4));
 });
 
 app.listen(3000, () => {
