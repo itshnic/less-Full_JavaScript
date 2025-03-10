@@ -94,15 +94,15 @@ const patternAddCheckBlock = function (id) {
 	item.setAttribute("id", id);
 	item.innerHTML = `<button type="button" class="_remove btn _small">-</button>
 						<div class="check__body_dish">
-							<select class="check__dish_category" name="category__dishes">
+							<select class="check__dish_category" name="dishes${id}">
 								<option value="">Выберите блюдо</option>
 							</select>
-							<select class="check__dish_name" name="category__dishes_vid">
+							<select class="check__dish_name" name="dishes_vid${id}">
 								<option value="">Название</option>
 							</select>
 						</div>
 						<button type="button" class="count__dish_btn btn _small _plus"></button>
-						<input class="count__dish_txt" type="text" value="1" />
+						<input class="count__dish_txt" name = 'count${id}' type="text" value="1" />
 						<button type="button" class="count__dish_btn btn _small _minus"></button>`;
 	document.querySelector(".order__check").appendChild(item);
 };
@@ -126,7 +126,7 @@ let getDataFromServer = (url, id) => {
 			patternAddCheckBlock(id);
 			const placeInBlock = document
 				.getElementById(id)
-				.querySelector('[name="category__dishes"]');
+				.querySelector(".check__dish_category");
 			renderHtmlInSelect(response, placeInBlock);
 
 			clickBtn(document.querySelector(".order__check"), response);
@@ -149,15 +149,34 @@ const addOptionHtml = function () {
 const btnForm = document.querySelector(".btnForm");
 btnForm.addEventListener("click", e => {
 	e.preventDefault();
-	let data = new FormData(document.querySelector(".order__form"));
+	let data = {};
+	let arrayDishClient = [];
+	let dishClient = {};
+	let counter = 1;
 
-	for (let [key, value] of data) {
-		console.log(`${key} - ${value}`);
+	for (let [key, value] of new FormData(
+		document.querySelector(".order__form")
+	)) {
+		if (key == "client") {
+			data[value] = arrayDishClient;
+		} else if (key[key.length - 1] == counter) {
+			key = key.slice(0, -1);
+			dishClient[key] = value;
+		} else {
+			arrayDishClient.push(dishClient);
+			counter += 1;
+			dishClient = {};
+			key = key.slice(0, -1);
+			dishClient[key] = value;
+		}
 	}
+	arrayDishClient.push(dishClient);
+	console.log(data);
 
-	fetch("/post", {
+	fetch("/", {
 		method: "POST",
-		body: data,
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data, null, 4),
 	})
 		.then(response => response.json())
 		.then(response => {

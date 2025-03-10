@@ -20,7 +20,7 @@ const cook = {
 const dishes = {
 	Pizza: ["Маргарита", "Пепперони"],
 	Sushi: ["Филадельфия", "Калифорния"],
-	Dessert: ["Тирамису ", "Чизкейк"],
+	Dessert: ["Тирамису 1", "Чизкейк"],
 };
 
 const cookForDishes = new Map();
@@ -45,11 +45,11 @@ app.get("/data", (req, res) => {
 	res.send(dishesStr);
 });
 
-app.post("/post", (req, res) => {
+app.post("/", (req, res) => {
 	const body = req.body;
-	for (let [key, value] of body) {
-		console.log(`${key} - ${value}`);
-	}
+
+	console.log(req.body);
+
 	res.send(JSON.stringify(obj, null, 4));
 });
 
