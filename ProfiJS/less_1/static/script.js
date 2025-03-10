@@ -171,7 +171,6 @@ btnForm.addEventListener("click", e => {
 		}
 	}
 	arrayDishClient.push(dishClient);
-	console.log(data);
 
 	fetch("/", {
 		method: "POST",
@@ -180,7 +179,30 @@ btnForm.addEventListener("click", e => {
 	})
 		.then(response => response.json())
 		.then(response => {
-			console.log(response);
+			console.log("Повара и их специализации:");
+			for (let key in response.cook) {
+				console.log(`${key} -  специализация: ${response.cook[key]}`);
+			}
+			console.log("");
+			console.log("Блюда и их повара:");
+			for (let key in response.client) {
+				response.client[key].forEach(order => {
+					console.log(
+						`${order.dishes} "${order.dishes_vid}" ${order.count} шт. - повар ${order.cook}`
+					);
+				});
+			}
+			console.log("");
+			console.log("Заказы:");
+			for (let key in response.client) {
+				console.log(`Клиент: ${key}`);
+				response.client[key].forEach(order => {
+					console.log(
+						`${order.dishes} "${order.dishes_vid}" ${order.count} шт.`
+					);
+				});
+			}
+			console.log("");
 		});
 });
 

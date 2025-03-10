@@ -30,9 +30,19 @@ cookForDishes
 	.set(cook.Olga, "Dessert")
 	.set(cook.Victor, "Sushi");
 
-let obj = Object.fromEntries(cookForDishes);
+let cookForDishesObj = Object.fromEntries(cookForDishes);
 
-const client = {};
+let ordersClient = {};
+
+let ordersClientAndCook = function (cookForDishes, ordersClient) {
+	for (let keyCook in cookForDishes) {
+		for (let keyClient in ordersClient) {
+			ordersClient[keyClient].forEach(el => {
+				if (el.dishes == cookForDishes[keyCook]) el.cook = keyCook;
+			});
+		}
+	}
+};
 
 app.get("/", (req, res) => {
 	res.render("order", {
@@ -46,11 +56,23 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-	const body = req.body;
+	let data = req.body;
 
-	console.log(req.body);
+	for (let key in data) {
+		ordersClient[key] = data[key];
+	}
+	ordersClientAndCook(cookForDishesObj, ordersClient);
 
-	res.send(JSON.stringify(obj, null, 4));
+	res.send(
+		JSON.stringify(
+			{
+				cook: cookForDishesObj,
+				client: ordersClient,
+			},
+			null,
+			4
+		)
+	);
 });
 
 app.listen(3000, () => {
