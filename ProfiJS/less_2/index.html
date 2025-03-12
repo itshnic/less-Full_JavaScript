@@ -4,8 +4,74 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.container {
+				margin: 0 auto;
+				width: 1024px;
+				padding: 10px;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				align-items: center;
+			}
+			.reviews {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			input,
+			textarea {
+				padding: 3px;
+			}
+			.reviews__all {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				width: 50%;
+			}
+			.reviews-item {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				outline: 1px solid black;
+				border-radius: 3px;
+				padding: 5px;
+			}
+			.reviews-item__name {
+				font-weight: bold;
+			}
+			button {
+				cursor: pointer;
+				width: 200px;
+				align-self: center;
+			}
+		</style>
 	</head>
 	<body>
-		<script src="script.js"></script>
+		<div class="container">
+			<form class="reviews" method="post">
+				<input type="text" name="user_name" placeholder="Имя" />
+				<textarea
+					placeholder="Текст отзыва"
+					name="reviews_text"
+					rows="5"
+					cols="60"
+				></textarea>
+				<button type="submit" id="send">Отправить отзыв</button>
+			</form>
+			<div class="reviews__all">
+				<div class="reviews-item">
+					<span class="reviews-item__name">Виктор</span>
+					<span class="reviews-item__text">Все понравилось</span>
+					<span class="reviews-item__date">22.02.2025</span>
+				</div>
+			</div>
+		</div>
+		<script src="less_2.js"></script>
+		<!-- <script src="less_1.js"></script> -->
 	</body>
 </html>
