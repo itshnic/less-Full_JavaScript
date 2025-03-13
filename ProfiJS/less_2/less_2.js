@@ -1,4 +1,5 @@
 "use strict";
+let reviews = [];
 const getDataForm = function () {
 	const form = document.querySelector(".reviews");
 	form.addEventListener("submit", event => {
@@ -8,30 +9,46 @@ const getDataForm = function () {
 		for (let [key, value] of dataTxt) {
 			reviewsNew[key] = value;
 		}
-		reviewsNew.date = new Date().toJSON().slice(0, 10).replace('/-/g, "/"');
-		setReviewsInLocalStorage(reviewsNew);
-		form.reset();
+		try {
+			if (!reviewsNew.name) throw new SyntaxError("Поле Имя пустое");
+			if (!reviewsNew.text) throw new SyntaxError("Поле текст пустое");
+			if (reviewsNew.text.length > 50)
+				throw new SyntaxError("Превышено количество символов");
+			reviewsNew.date = new Date().toJSON().slice(0, 10).replace('/-/g, "/"');
+			setReviewsInLocalStorage(reviewsNew);
+			form.reset();
+		} catch (e) {
+			alert(e.message);
+		}
 	});
 };
 
 const setReviewsInLocalStorage = function (reviewsNew) {
-	const userName = reviewsNew.user_name;
-	let reviews = {};
 	if (localStorage.getItem("reviews")) {
 		reviews = JSON.parse(localStorage.reviews);
 	}
-	reviews[userName] = {};
-	reviews[userName].text = reviewsNew.reviews_text;
-	reviews[userName].date = reviewsNew.date;
+	reviews.push(reviewsNew);
+	render(reviews);
 	localStorage.reviews = JSON.stringify(reviews);
 };
-const render = function (obj) {
-	const reviewsAllBlock = document.querySelector(".reviews__all");
-	const reviewsItemBlock = document.createElement("div");
-	reviewsItemBlock.classList.add("reviews-item");
+const render = function (arrayReviews) {
+	if (arrayReviews.length) {
+		const reviewsAllBlock = document.querySelector(".reviews__all");
+		reviewsAllBlock.innerHTML = "";
+		for (let value of arrayReviews) {
+			let reviewsItemBlock = document.createElement("div");
+			reviewsItemBlock.classList.add("reviews-item");
 
-	for (let [key, value] of obj) {
+			reviewsItemBlock.innerHTML = `<span class="reviews-item__name">${value.name}</span>
+		<span class="reviews-item__text">${value.text}</span>
+		<span class="reviews-item__date">${value.date}</span>`;
+			reviewsAllBlock.append(reviewsItemBlock);
+		}
 	}
 };
+
+if (localStorage.getItem("reviews")) {
+	render(JSON.parse(localStorage.reviews));
+}
 getDataForm();
-/* localStorage.clear(); */
+localStorage.clear();
