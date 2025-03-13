@@ -29,7 +29,7 @@ class Library {
 	}
 }
 
-const arrBook = new Library("Чехов", "Толстой");
+/* const arrBook = new Library("Чехов", "Толстой");
 arrBook.addBooks = "Пушкин";
 arrBook.addBooks = "Маяковский";
 arrBook.addBooks = "GB";
@@ -41,3 +41,4 @@ arrBook.removeBook("GB");
 console.log(arrBook.allBooks);
 
 arrBook.addBooks = "Маяковский";
+ */
