@@ -1,11 +1,12 @@
 "use strict";
 let reviews = [];
-const getDataForm = function () {
+let reviewsNew = {};
+
+const contentForm = function () {
 	const form = document.querySelector(".reviews");
 	form.addEventListener("submit", event => {
 		event.preventDefault();
 		const dataTxt = new FormData(document.querySelector(".reviews"));
-		let reviewsNew = {};
 		for (let [key, value] of dataTxt) {
 			reviewsNew[key] = value;
 		}
@@ -50,5 +51,6 @@ const render = function (arrayReviews) {
 if (localStorage.getItem("reviews")) {
 	render(JSON.parse(localStorage.reviews));
 }
-getDataForm();
-localStorage.clear();
+contentForm();
+
+/* localStorage.clear(); */
