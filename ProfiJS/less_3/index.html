@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.container {
+				margin: 0 auto;
+				width: 1024px;
+				padding: 10px;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+				align-items: center;
+			}
+			.reviews {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			input,
+			textarea {
+				padding: 3px;
+			}
+			.reviews__all {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				width: 50%;
+			}
+			.reviews-item {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				outline: 1px solid black;
+				border-radius: 3px;
+				padding: 5px;
+			}
+			.reviews-item_user_name {
+				font-weight: bold;
+			}
+			.reviews-item_product_name {
+				font-weight: bold;
+				outline: 1px solid black;
+				border-radius: 3px;
+				background: #a28a8a;
+				color: white;
+				cursor: pointer;
+				width: 50%;
+				text-align: center;
+				transition: color 0.5s ease;
+			}
+			.reviews-item_product_name:hover {
+				color: black;
+			}
+			button {
+				cursor: pointer;
+				width: 200px;
+				align-self: center;
+			}
+			#sortOff {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<form action="#" class="reviews">
+				<input type="text" name="user_name" placeholder="Имя" />
+				<input type="text" name="product_name" placeholder="Наименование" />
+				<textarea
+					placeholder="Текст отзыва"
+					name="text"
+					rows="5"
+					cols="60"
+				></textarea>
+				<button type="submit" id="send">Отправить отзыв</button>
+				<button id="sortOff">Отменить сортировку</button>
+			</form>
+			<div class="reviews__all"></div>
+		</div>
+		<script src="./script.js"></script>
+	</body>
+</html>
