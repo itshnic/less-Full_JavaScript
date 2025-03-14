@@ -114,12 +114,18 @@ const deleteReviews = function () {
 			e.stopPropagation();
 			const parentBlock = e.target.closest(".reviews-item");
 			const id = parentBlock.getAttribute("id");
-			console.log(id);
-			let reviews = JSON.parse(localStorage.reviews).filter(
-				element => element.id != id
-			);
-			localStorage.reviews = JSON.stringify(reviews);
-			render(reviews);
+
+			let reviews = JSON.parse(localStorage.reviews);
+			if (reviews.length > 1) {
+				console.log("готово");
+				let reviewsNew = reviews.filter(element => element.id != id);
+				localStorage.reviews = JSON.stringify(reviewsNew);
+				render(reviewsNew);
+			} else {
+				localStorage.removeItem("reviews");
+				const reviewsAllBlock = document.querySelector(".reviews__all");
+				reviewsAllBlock.innerHTML = "";
+			}
 		});
 	});
 };
@@ -131,4 +137,5 @@ if (localStorage.getItem("reviews")) {
 addContentForm();
 sortReviews(document.querySelectorAll(".reviews-item"));
 deleteReviews();
-/* localStorage.clear(); */
+/* localStorage.clear();
+ */
