@@ -28,6 +28,8 @@ const addContentForm = function () {
 		data
 			.then(response => {
 				setReviewsInLocalStorage(response);
+				sortReviews(document.querySelectorAll(".reviews-item"));
+				deleteReviews();
 				form.reset();
 			})
 			.catch(e => {
@@ -37,27 +39,33 @@ const addContentForm = function () {
 };
 
 const setReviewsInLocalStorage = function (reviewsNew) {
+	let id = 0;
 	if (localStorage.getItem("reviews")) {
 		reviews = JSON.parse(localStorage.reviews);
+		id = reviews[reviews.length - 1].id;
 	}
+	reviewsNew.id = ++id;
 	reviews.push(reviewsNew);
 	render(reviews);
 	localStorage.reviews = JSON.stringify(reviews);
 };
 const render = function (arrayReviews) {
+	console.log(arrayReviews);
 	if (arrayReviews.length) {
 		const reviewsAllBlock = document.querySelector(".reviews__all");
 		reviewsAllBlock.innerHTML = "";
 		for (let value of arrayReviews) {
 			let reviewsItemsBlock = document.createElement("div");
 			reviewsItemsBlock.classList.add("reviews-item");
+			reviewsItemsBlock.setAttribute("id", value.id);
 			const arrayKeys = Object.keys(value);
-			console.log(arrayKeys);
 			arrayKeys.forEach(el => {
-				let reviewsItemBlock = document.createElement("span");
-				reviewsItemBlock.classList.add(`reviews-item_${el}`);
-				reviewsItemBlock.textContent = value[el];
-				reviewsItemsBlock.append(reviewsItemBlock);
+				if (el != "id") {
+					let reviewsItemBlock = document.createElement("span");
+					reviewsItemBlock.classList.add(`reviews-item_${el}`);
+					reviewsItemBlock.textContent = value[el];
+					reviewsItemsBlock.append(reviewsItemBlock);
+				}
 			});
 
 			let btnDelReview = document.createElement("button");
@@ -69,9 +77,58 @@ const render = function (arrayReviews) {
 	}
 };
 
+const sortReviews = function (arrayItemsBlock) {
+	if (arrayItemsBlock.length) {
+		const btnSortOff = document.querySelector(".sortOff");
+		arrayItemsBlock.forEach(el => {
+			el.addEventListener("click", e => {
+				if (e.target.classList.contains("reviews-item_product_name")) {
+					const name = e.target.textContent;
+					arrayItemsBlock.forEach(item => {
+						const itemProductName = item.querySelector(
+							".reviews-item_product_name"
+						);
+						if (itemProductName.textContent != name) {
+							item.classList.add("_hidden");
+						}
+					});
+					btnSortOff.classList.remove("_hidden");
+				}
+			});
+		});
+		btnSortOff.addEventListener("click", () => {
+			arrayItemsBlock.forEach(el => {
+				if (el.classList.contains("_hidden")) {
+					el.classList.remove("_hidden");
+					btnSortOff.classList.add("_hidden");
+				}
+			});
+		});
+	}
+};
+
+const deleteReviews = function () {
+	const btnDel = document.querySelectorAll(".btn__del");
+	btnDel.forEach(el => {
+		el.addEventListener("click", e => {
+			e.stopPropagation();
+			const parentBlock = e.target.closest(".reviews-item");
+			const id = parentBlock.getAttribute("id");
+			console.log(id);
+			let reviews = JSON.parse(localStorage.reviews).filter(
+				element => element.id != id
+			);
+			localStorage.reviews = JSON.stringify(reviews);
+			render(reviews);
+		});
+	});
+};
+
 if (localStorage.getItem("reviews")) {
 	render(JSON.parse(localStorage.reviews));
 }
 
 addContentForm();
+sortReviews(document.querySelectorAll(".reviews-item"));
+deleteReviews();
 /* localStorage.clear(); */
