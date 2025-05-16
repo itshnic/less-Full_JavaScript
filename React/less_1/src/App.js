@@ -10,7 +10,7 @@ function App() {
 			<header className="App-header">
 				<span>Мое имя {myName}!</span>
 				<Message surName={surname}></Message>
-				<Test />
+				<Test text={1} />
 			</header>
 		</div>
 	);
