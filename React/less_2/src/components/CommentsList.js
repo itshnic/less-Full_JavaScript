@@ -6,27 +6,55 @@ function CommentsList() {
 		{ id: 2, text: "Это второй комментарий" },
 		{ id: 3, text: "Это третий комментарий" },
 	]);
+	const [inputTxt, setInputTxt] = useState("");
 
-	let delComment = id => {
+	let addComment = () => {
+		if (inputTxt) {
+			let idLastItem = comments.length ? comments[comments.length - 1].id : 0;
+			setComments([...comments, { id: idLastItem + 1, text: inputTxt }]);
+			setInputTxt("");
+		}
+	};
+	let click = event => {
+		let id = event.target.id;
 		setComments(comments.filter(item => item.id != id));
 	};
 
-	let arrList = [];
-
 	useEffect(() => {
-		arrList = comments.map(item => {
-			<li className="list__item">
-				<p id={item.id} className="text">
-					{item.text}
-				</p>
-				<button className="dell" onClick={delComment(item.id)}>
-					Удалить
-				</button>
-			</li>;
+		console.log("список комментариев:");
+		comments.forEach(el => {
+			console.log(el.id + " " + el.text);
 		});
 	}, [comments]);
 
-	return <ul>Привет</ul>;
+	return (
+		<>
+			<ul>
+				{comments.map(item => (
+					<li className="list__item">
+						<p id={item.id} className="text">
+							{item.text}
+						</p>
+						<button id={item.id} className="dell" onClick={click}>
+							Удалить
+						</button>
+					</li>
+				))}
+			</ul>
+			<div>
+				<input
+					onChange={event => {
+						setInputTxt(event.target.value);
+					}}
+					type="text"
+					value={inputTxt}
+				/>
+				<button className="add__btn" onClick={addComment}>
+					Добавить
+				</button>
+			</div>
+		</>
+	);
 }
 
 export default CommentsList;
